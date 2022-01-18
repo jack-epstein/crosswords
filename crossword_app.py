@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-df = pd.read_csv('crossword.csv') #read in data
+df = pd.read_csv('data/crossword.csv') #read in data
 df['Week'] = pd.to_datetime(df['Week']) #set field as datetime
 #indicator for solving after Thurs
 df['late_week'] = ((df.Thursday == 1) | (df.Friday == 1) | (df.Saturday) | (df.Sunday)).astype(int) 
