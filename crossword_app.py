@@ -3,7 +3,9 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+#PANDAS WORK
 df = pd.read_csv('data/crossword.csv') #read in data
+recent_week = df.tail(1)['Week'].item() #save recent week as string
 df['Week'] = pd.to_datetime(df['Week']) #set field as datetime
 #indicator for solving after Thurs
 df['late_week'] = ((df.Thursday == 1) | (df.Friday == 1) | (df.Saturday) | (df.Sunday)).astype(int) 
@@ -12,9 +14,10 @@ df['late_week'] = ((df.Thursday == 1) | (df.Friday == 1) | (df.Saturday) | (df.S
 days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday','late_week']
 
 df_totals = df[days].describe().T[['count','mean']]
-df_totals['correct'] = (df_totals['count'] * df_totals['mean']).astype(int)
+df_totals['total correct'] = (df_totals['count'] * df_totals['mean']).astype(int)
 
-df_totals = df_totals[['correct','mean']]
+df_totals = df_totals[['total correct','mean']]
+df_totals['percent correct'] = df_totals['mean']
 
 
 #get cumulative totals and running average
@@ -29,32 +32,36 @@ for d in days:
 df_20 = df[days].rolling(20).mean()
 df_52 = df[days].rolling(52).mean()
 
+#make 20 week rolling average into a dataframe to compare current week to week - 20
+df_L20 = df_20.iloc[[df_20.shape[0]-21, df_20.shape[0]-1]].T
+df_L20['L20'] = df_L20[df_20.shape[0]-1]
+df_L20['Comp'] = df_L20[df_20.shape[0]-21]
+df_L20['percent_diff'] = df_L20['L20']/df_L20['Comp'] - 1
 
-#STILL NEED TO ADD -- LAST 20 AVERAGES AND PCT CHANGES (MAYBE COMPARED TO THE PREVIOUS LAST 2 AVG?)
-        
+
+
     
-#make streamlit app
+#STREAMLIT WORK
 st.title('Crossword Stats')
-st.write('Check out my NY Times Crossword Puzzle stats!')
+st.write('Check out my progress on the NY Times Crossword Puzzle!')
 
-st.header('Total Weeks')
-st.metric('',df.shape[0])
+cols = st.columns(2)
+with cols[0]:
+    st.metric('Total Weeks Tracked',df.shape[0])
+with cols[1]:
+    st.metric('Most Recent Week',recent_week)
 
-st.header('Total Correct Puzzles')
-cols = st.columns(len(days)) 
-for i in range(len(days)):
-    with cols[i]:
-        st.metric(days[i],int(df_totals.iloc[i].correct))
+st.table(round(df_totals[['total correct','percent correct']].T,2))
         
-st.header('Percetage Finished')
+st.header('20 Week Moving Averages')       
 cols = st.columns(4) 
 for i in range(4):
     with cols[i]:
-        st.metric(days[i],"{:.0%}".format(df_totals.iloc[i]['mean']))
+        st.metric(days[i],"{:.0%}".format(df_L20.iloc[i]['L20']),"{:.0%}".format(df_L20.iloc[i]['percent_diff']))
 cols = st.columns(4) 
 for i in range(4):
     with cols[i]:
-        st.metric(days[i+4],"{:.0%}".format(df_totals.iloc[i+4]['mean']))
+        st.metric(days[i+4],"{:.0%}".format(df_L20.iloc[i+4]['L20']),"{:.0%}".format(df_L20.iloc[i+4]['percent_diff']))
         
 
 st.header('Trends Over Time')
