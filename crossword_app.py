@@ -68,7 +68,7 @@ st.header('Trends Over Time')
 day = st.selectbox('Pick Weekday',days)
 
 fig, ax = plt.subplots()
-ax.set_title(day+' Trends')
+fig.patch.set_alpha(0.1)
 ax.plot(df.Week, df_running_avg[day], label='Running Average')
 ax.plot(df.Week, df_20[day], label='L20 Average')
 ax.plot(df.Week, df_52[day], label='L52 Average')
