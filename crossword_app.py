@@ -72,11 +72,11 @@ st.header('20 Week Moving Averages')
 cols = st.columns(4) 
 for i in range(4):
     with cols[i]:
-        st.metric(days[i],"{:.0%}".format(df_L20.iloc[i]['L20']),"{:.0%}".format(df_L20.iloc[i]['percent_diff']))
+        st.metric(days[i],"{:.0%}".format(df_L20.iloc[i]['L20']))
 cols = st.columns(4) 
 for i in range(4):
     with cols[i]:
-        st.metric(days[i+4],"{:.0%}".format(df_L20.iloc[i+4]['L20']),"{:.0%}".format(df_L20.iloc[i+4]['percent_diff']))
+        st.metric(days[i+4],"{:.0%}".format(df_L20.iloc[i+4]['L20']))
         
 
 st.header('Trends Over Time')
@@ -93,3 +93,12 @@ plt.xticks(rotation=90)
 st.pyplot(fig)
  
 st.header('Active Streaks')
+cols = st.columns(4) 
+for i in range(4):
+    with cols[i]:
+        st.metric(days[i],"{:.0%}".format(df_L20.iloc[i]['L20']),"{:.0%}".format(df_L20.iloc[i]['percent_diff']))
+cols = st.columns(4) 
+for i in range(4):
+    with cols[i]:
+        st.metric(days[i+4],"{:.0%}".format(df_L20.iloc[i+4]['L20']),"{:.0%}".format(df_L20.iloc[i+4]['percent_diff']))
+
