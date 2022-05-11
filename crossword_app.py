@@ -38,7 +38,22 @@ df_L20['L20'] = df_L20[df_20.shape[0]-1]
 df_L20['Comp'] = df_L20[df_20.shape[0]-21]
 df_L20['percent_diff'] = df_L20['L20']/df_L20['Comp'] - 1
 
+#get active streaks
+streak_dict = {}
+for day in df.columns[2:]:
+    df_temp = pd.DataFrame()
+    df_temp['Current'] = df[day]
+    df_temp['shifted'] = df[day].shift(1)
+    df_temp['StartStreak'] = df_temp['Current'] != df_temp['shifted']
+    df_temp['StreakId'] = df_temp['StartStreak'].cumsum()
+    
+    if df_temp['Current'][df.shape[0]-1] == 1: #if streak is active
+        streak_dict[day] = df_temp[df_temp['StreakId'] == df_temp['StreakId'].max()].shape[0]
 
+    elif df_temp['Current'][df.shape[0]-1] == 0: #if streak is inactive
+        streak_dict[day] = 0
+    else:
+        print('Error')
 
     
 #STREAMLIT WORK
@@ -77,3 +92,4 @@ plt.xticks(rotation=90)
 
 st.pyplot(fig)
  
+st.header('Active Streaks')
