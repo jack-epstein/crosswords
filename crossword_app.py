@@ -22,7 +22,7 @@ df_totals['percent correct'] = df_totals['mean']
 
 #get cumulative totals and running average
 df_cumul = df[['WeekNum','Week']].copy()
-df_cumul[days] = df.cumsum()[days]
+df_cumul[days] = df[days].cumsum()
 
 df_running_avg = df_cumul[['WeekNum','Week']].copy()
 for d in days:
