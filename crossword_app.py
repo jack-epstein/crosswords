@@ -82,15 +82,15 @@ for i in range(4):
 st.header('Trends Over Time')
 day = st.selectbox('Pick Weekday',days)
 
-fig, ax = plt.subplots()
+# fig, ax = plt.subplots()
 # ax.plot(df.Week, df_running_avg[day], label='Running Average')
-ax.plot(df.Week, df_20[day], label='L20 Average')
-ax.plot(df.Week, df_52[day], label='L52 Average')
-ax.set_ylim(0,1.1)
-ax.legend(loc='best',prop={'size': 6})
-plt.xticks(rotation=90)
+# ax.plot(df.Week, df_20[day], label='L20 Average')
+# ax.plot(df.Week, df_52[day], label='L52 Average')
+# ax.set_ylim(0,1.1)
+# ax.legend(loc='best',prop={'size': 6})
+# plt.xticks(rotation=90)
 
-st.pyplot(fig)
+# st.pyplot(fig)
  
 st.header('Active Streaks')
 cols = st.columns(4) 
