@@ -79,8 +79,8 @@ for i in range(4):
         st.metric(days[i+4],"{:.0%}".format(df_L20.iloc[i+4]['L20']),"{:.0%}".format(df_L20.iloc[i+4]['percent_diff']))
         
 
-st.header('Trends Over Time')
-day = st.selectbox('Pick Weekday',days)
+# st.header('Trends Over Time')
+# day = st.selectbox('Pick Weekday',days)
 
 # fig, ax = plt.subplots()
 # ax.plot(df.Week, df_running_avg[day], label='Running Average')
