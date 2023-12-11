@@ -91,8 +91,8 @@ ax.legend(loc='best',prop={'size': 6})
 plt.xticks(rotation=90)
 
 st.pyplot(fig)
- 
-st.header('Active Streaks test')
+
+st.header('Active Streaks')
 cols = st.columns(4) 
 for i in range(4):
     with cols[i]:
