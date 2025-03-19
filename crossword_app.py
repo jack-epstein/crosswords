@@ -68,8 +68,8 @@ with cols[0]:
 with cols[1]:
     st.metric('Most Recent Week', recent_week)
 
-st.table(round(df_totals[['total correct']].T, 2))
-st.table(round(df_totals[['percent correct']].T, 0))
+st.table(round(df_totals[['total correct']].T, 0))
+st.table(round(df_totals[['percent correct']].T, 2))
         
 st.header('20 Week Moving Averages')       
 cols = st.columns(4) 
