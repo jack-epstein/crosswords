@@ -60,6 +60,7 @@ for day in df.columns[2:]:
 #STREAMLIT WORK
 st.title('Crossword Stats')
 st.write('Check out my progress on the NY Times Crossword Puzzle!')
+st.write('Note: I have decided to stop updating the data. Consider these my final stats!')
 
 cols = st.columns(2)
 with cols[0]:
@@ -67,7 +68,8 @@ with cols[0]:
 with cols[1]:
     st.metric('Most Recent Week', recent_week)
 
-st.table(round(df_totals[['total correct', 'percent correct']].T, 2))
+st.table(round(df_totals[['total correct']].T, 2))
+st.table(round(df_totals[['percent correct']].T, 2))
         
 st.header('20 Week Moving Averages')       
 cols = st.columns(4) 
